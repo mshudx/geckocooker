@@ -32,5 +32,15 @@ namespace Geckocooker.Client.Views
             mainModel = new MainModel();
             this.DataContext = mainModel;
         }
+
+        private void DecreaseTargetTemperatureButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            mainModel.TargetTemperature--;
+        }
+
+        private void IncreaseTargetTemperatureButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            mainModel.TargetTemperature++;
+        }
     }
 }

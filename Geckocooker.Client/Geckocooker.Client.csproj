@@ -98,6 +98,7 @@
     </Compile>
     <Compile Include="Helpers\TemperatureConverter.cs" />
     <Compile Include="Models\MainModel.cs" />
+    <Compile Include="Models\TemperatureDataPoint.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

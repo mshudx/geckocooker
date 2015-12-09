@@ -26,5 +26,14 @@
             <TextBlock Text="{Binding TargetTemperature, Converter={StaticResource TemperatureConverter}}" HorizontalAlignment="Center" FontSize="80" FontWeight="Bold" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0"></TextBlock>
         </StackPanel>
         <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="{Binding Status}" FontSize="80" VerticalAlignment="Top"></TextBlock>
+        <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="3"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="DecreaseTargetTemperatureButton" Content="-" FontSize="30" FontWeight="Bold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="DecreaseTargetTemperatureButton_Tapped"></Button>
+            <Button x:Name="IncreaseTargetTemperatureButton" Content="+" FontSize="30" FontWeight="Bold" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="IncreaseTargetTemperatureButton_Tapped"></Button>
+        </Grid>
     </Grid>
 </Page>

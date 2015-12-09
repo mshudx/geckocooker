@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Azure.Devices.Client;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +13,11 @@ namespace Geckocooker.Client.Models
 {
     internal class MainModel : INotifyPropertyChanged
     {
+        private DeviceClient deviceClient;
+        private const string iotHubUri = "geckocooker.azure-devices.net";
+        private const string deviceId = "geckocooker-sensor01";
+        private const string deviceKey = "qFoea+tutHfF13hqbnZQwZla+rjHX3uAeP9coVczj/0=";
+
         private const double RoomTemperature = 25.0F;
         private const double HeatChangeRatePerSecond = 0.2F;
         private const double HeatUncertaintyRangeFraction = 0.05;
@@ -65,21 +72,16 @@ namespace Geckocooker.Client.Models
 
         public MainModel()
         {
-            var noAwait = Initialize();
-        }
+            deviceClient = DeviceClient.Create(
+                iotHubUri,
+                new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey), TransportType.Http1);
 
-        private async Task Initialize()
-        {
-            // Register device in the Azure IoT Hub
-
-
-            // Start the simulation timer
             timer.Interval = TimeSpan.FromMilliseconds(1000);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
 
-        private void Timer_Tick(object sender, object e)
+        private async void Timer_Tick(object sender, object e)
         {
             // Simulate heat change
             if (TargetTemperature != _actualTemperature)
@@ -111,6 +113,20 @@ namespace Geckocooker.Client.Models
             // Notify listeners that the measured temperature has changed
             // Because it is slightly random, we're sure to have a change
             OnPropertyChangedExplicit(nameof(MeasuredTemperature));
+
+            // Push message to IoT Hub (Event Hubs)
+            await PushTemperatureToCloud(MeasuredTemperature);
+        }
+
+        private async Task PushTemperatureToCloud(double measuredTemperature)
+        {
+            var messageString = JsonConvert.SerializeObject(new TemperatureDataPoint() { PartitionKey = deviceId, Timestamp = DateTimeOffset.Now, TemperatureInCelsius = MeasuredTemperature });
+            var message = new Message(Encoding.UTF8.GetBytes(messageString));
+            try
+            {
+                await deviceClient.SendEventAsync(message);
+            }
+            catch { }
         }
 
         #region INotifyPropertyChanged Implementation
