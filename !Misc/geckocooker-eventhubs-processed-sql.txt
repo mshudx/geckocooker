@@ -1,0 +1,9 @@
+SELECT
+    'geckocooker' AS PartitionKey, 
+	System.Timestamp AS RowKey, 
+	AVG([TemperatureInCelsius]) AS AvgTemp
+INTO
+    [processed]
+FROM
+    [eventhub]
+GROUP BY TumblingWindow(second, 5)

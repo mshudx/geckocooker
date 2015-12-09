@@ -10,30 +10,31 @@ namespace Geckocooker.DeviceRegistrator
 {
     class Program
     {
+        private const string IotHubConnectionString = "HostName=geckocooker.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=4fsJLkA4pSyUej5KHpoEP1LV/KpRv/G7Dp8ovLzh+wg=";
+        private const string DeviceId = "geckocooker-sensor01";
+
         private static RegistryManager registryManager;
-        private const string iotHubConnectionString = "HostName=geckocooker.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=4fsJLkA4pSyUej5KHpoEP1LV/KpRv/G7Dp8ovLzh+wg=";
-        private const string deviceId = "geckocooker-sensor01";
 
         static void Main(string[] args)
         {
-            registryManager = RegistryManager.CreateFromConnectionString(iotHubConnectionString);
+            registryManager = RegistryManager.CreateFromConnectionString(IotHubConnectionString);
             RegisterDevice().Wait();
             Console.ReadLine();
         }
 
         private static async Task RegisterDevice()
         {
-            Console.WriteLine($"Registering {deviceId} in Azure IoT Hub...");
+            Console.WriteLine($"Registering {DeviceId} in Azure IoT Hub...");
             Device device;
             try
             {
-                device = await registryManager.AddDeviceAsync(new Device(deviceId));
+                device = await registryManager.AddDeviceAsync(new Device(DeviceId));
             }
             catch (DeviceAlreadyExistsException)
             {
-                device = await registryManager.GetDeviceAsync(deviceId);
+                device = await registryManager.GetDeviceAsync(DeviceId);
             }
-            Console.WriteLine($"Device key for {deviceId}:\r\n{device.Authentication.SymmetricKey.PrimaryKey}");
+            Console.WriteLine($"Device key for {DeviceId}:\r\n{device.Authentication.SymmetricKey.PrimaryKey}");
         }
     }
 }

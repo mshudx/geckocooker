@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Geckocooker Admin</title>
+</head>
+<body>
+    <div>
+        <a href="/Home/ClearTables">Clear Temperature Logs</a><br />
+        <br />
+        <form method="post">
+            <input type="text" value="30.0" name="targetTemperature" />
+            <input type="submit" value="Set Target Temperature" />
+        </form>
+        <br />
+        <i>@ViewBag.Message</i><br />
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -14,9 +15,9 @@ namespace Geckocooker.Client.Models
     internal class MainModel : INotifyPropertyChanged
     {
         private DeviceClient deviceClient;
-        private const string iotHubUri = "geckocooker.azure-devices.net";
-        private const string deviceId = "geckocooker-sensor01";
-        private const string deviceKey = "qFoea+tutHfF13hqbnZQwZla+rjHX3uAeP9coVczj/0=";
+        private const string IotHubUri = "geckocooker.azure-devices.net";
+        private const string DeviceId = "geckocooker-sensor01";
+        private const string DeviceKey = "qFoea+tutHfF13hqbnZQwZla+rjHX3uAeP9coVczj/0=";
 
         private const double RoomTemperature = 25.0F;
         private const double HeatChangeRatePerSecond = 0.2F;
@@ -73,12 +74,41 @@ namespace Geckocooker.Client.Models
         public MainModel()
         {
             deviceClient = DeviceClient.Create(
-                iotHubUri,
-                new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey), TransportType.Http1);
+                IotHubUri,
+                new DeviceAuthenticationWithRegistrySymmetricKey(DeviceId, DeviceKey), 
+                TransportType.Http1);
+
+            ListenForMessages();
 
             timer.Interval = TimeSpan.FromMilliseconds(1000);
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
+
+        private async void ListenForMessages()
+        {
+            while (true)
+            {
+                var message = await deviceClient.ReceiveAsync();
+                if (message == null)
+                {
+                    await Task.Delay(1000);
+                    continue;
+                }
+
+                try
+                {
+                    var messageString = Encoding.UTF8.GetString(message.GetBytes());
+                    var targetTemperature = double.Parse(messageString, CultureInfo.InvariantCulture);
+                    TargetTemperature = targetTemperature;
+                }
+                catch
+                { }
+                finally
+                {
+                    await deviceClient.CompleteAsync(message);
+                }
+            }
         }
 
         private async void Timer_Tick(object sender, object e)
@@ -120,7 +150,7 @@ namespace Geckocooker.Client.Models
 
         private async Task PushTemperatureToCloud(double measuredTemperature)
         {
-            var messageString = JsonConvert.SerializeObject(new TemperatureDataPoint() { PartitionKey = deviceId, Timestamp = DateTimeOffset.Now, TemperatureInCelsius = MeasuredTemperature });
+            var messageString = JsonConvert.SerializeObject(new TemperatureDataPoint() { PartitionKey = DeviceId, Timestamp = DateTimeOffset.Now, TemperatureInCelsius = MeasuredTemperature });
             var message = new Message(Encoding.UTF8.GetBytes(messageString));
             try
             {
