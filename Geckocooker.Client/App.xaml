@@ -1,0 +1,11 @@
+﻿<Application
+    x:Class="Geckocooker.Client.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Geckocooker.Client"
+    xmlns:helpers="using:Geckocooker.Client.Helpers"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <helpers:TemperatureConverter x:Key="TemperatureConverter"></helpers:TemperatureConverter>
+    </Application.Resources>
+</Application>
