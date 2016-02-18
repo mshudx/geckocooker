@@ -42,7 +42,7 @@ namespace Geckocooker.AdminWeb.Controllers
             var tableClient = cloudStorageAccount.CreateCloudTableClient();
             var rawTable = tableClient.GetTableReference("geckocookerraw");
             rawTable.DeleteIfExists();
-            var processedTable = tableClient.GetTableReference("geckocookerprocessed");
+            var processedTable = tableClient.GetTableReference("geckocookerprocessed2");
             processedTable.DeleteIfExists();
 
             ViewBag.Message = "Tables deleted. Wait 1-2 minutes and restart streaming jobs.";
