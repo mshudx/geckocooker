@@ -5,5 +5,5 @@ SELECT
 INTO
     [processed]
 FROM
-    [eventhub]
+    [iothub]
 GROUP BY TumblingWindow(second, 5)

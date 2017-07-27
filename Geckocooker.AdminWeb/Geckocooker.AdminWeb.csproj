@@ -150,7 +150,7 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\geckocookeradmin - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\geckocookerdemo - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

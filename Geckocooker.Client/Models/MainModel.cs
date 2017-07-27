@@ -15,9 +15,9 @@ namespace Geckocooker.Client.Models
     internal class MainModel : INotifyPropertyChanged
     {
         private DeviceClient deviceClient;
-        private const string IotHubUri = "geckocooker.azure-devices.net";
+        private const string IotHubUri = "geckocookerdemo.azure-devices.net";
         private const string DeviceId = "geckocooker-sensor01";
-        private const string DeviceKey = "qFoea+tutHfF13hqbnZQwZla+rjHX3uAeP9coVczj/0=";
+        private const string DeviceKey = "tDSsh7UXIa0Ci1+a4kUHbZwXdYViqUuHV4gCtLz9F6M=";
 
         private const double RoomTemperature = 25.0F;
         private const double HeatChangeRatePerSecond = 0.2F;
