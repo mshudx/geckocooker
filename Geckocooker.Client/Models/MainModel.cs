@@ -17,7 +17,7 @@ namespace Geckocooker.Client.Models
         private DeviceClient deviceClient;
         private const string IotHubUri = "geckocookerdemo.azure-devices.net";
         private const string DeviceId = "geckocooker-sensor01";
-        private const string DeviceKey = "tDSsh7UXIa0Ci1+a4kUHbZwXdYViqUuHV4gCtLz9F6M=";
+        private const string DeviceKey = "REDACTED";
 
         private const double RoomTemperature = 25.0F;
         private const double HeatChangeRatePerSecond = 0.2F;

@@ -13,8 +13,8 @@ namespace Geckocooker.AdminWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private const string AzureStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=geckocookerdemo;AccountKey=R0Qot/+fbrlJXSpjHReEg/Wb14VfIX93baK6FalpjW7qwrybq50XANdQgMZfCn46Ru+6CLxJxhZHOJr3ekLBnQ==;EndpointSuffix=core.windows.net";
-        private const string IotHubConnectionString = "HostName=geckocookerdemo.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=rtdqip0Vr6+UKpBCbmC6qZpLvu/4N/cveH5MsIqj/6Y=";
+        private const string AzureStorageConnectionString = "REDACTED";
+        private const string IotHubConnectionString = "REDACTED";
         private const string DeviceId = "geckocooker-sensor01";
 
         private const string RawTableName = "geckocookerraw";

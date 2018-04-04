@@ -10,7 +10,7 @@ namespace Geckocooker.DeviceRegistrator
 {
     class Program
     {
-        private const string IotHubConnectionString = "HostName=geckocookerdemo.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=rtdqip0Vr6+UKpBCbmC6qZpLvu/4N/cveH5MsIqj/6Y=";
+        private const string IotHubConnectionString = "REDACTED";
         private const string DeviceId = "geckocooker-sensor01";
 
         private static RegistryManager registryManager;
